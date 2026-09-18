@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Truck, ShieldCheck, UserCheck, LogOut, Sparkles } from 'lucide-react';
+import {  ShieldCheck, UserCheck, LogOut, Sparkles } from 'lucide-react';
+ import logo from '../assets/logo.png';
 
 const Navbar = ({ user, onLogout }) => {
   const navigate = useNavigate();
@@ -28,7 +29,8 @@ const Navbar = ({ user, onLogout }) => {
           {/* Logo & Brand */}
           <Link to="/" className="flex items-center space-x-3 group">
             <div className="bg-gradient-to-tr from-emerald-500 to-green-400 p-2 rounded-xl text-slate-950 group-hover:scale-105 transition-transform">
-              <Truck className="w-6 h-6" />
+             <div className="bg-white p-1.5 rounded-xl group-hover:scale-105 transition-transform"> 
+              <img src={logo} alt="ECO-civic logo" className="w-8 h-8 object-contain" /> </div>
             </div>
             <div>
               <div className="flex items-center space-x-2">
