@@ -60,7 +60,7 @@ const AdminDashboard = ({ user }) => {
     e.preventDefault();
     if (!selectedComplaint || !assignStaffId) return;
 
-    const staffMember = staffList.find((s) => s.id === assignStaffId);
+   const staffMember = staffList.find((s) => (s.id || s._id) === assignStaffId);
     setAssigning(true);
 
     try {
@@ -346,11 +346,7 @@ const AdminDashboard = ({ user }) => {
                   className="w-full rounded-xl border border-slate-300 py-2.5 text-xs font-medium bg-white"
                 >
                   <option value="">-- Choose Worker --</option>
-                  {staffList.map((s) => (
-                    <option key={s.id} value={s.id}>
-                      {s.full_name} ({s.phone}) - {s.ward_no}
-                    </option>
-                  ))}
+                   {staffList.map((s) => ( <option key={s.id || s._id} value={s.id || s._id}> {s.full_name} ({s.phone}) - {s.ward_no} </option> ))}
                   {/* Fallback option if staff list is empty */}
                   <option value="staff_demo_01">Ramesh Kumar (Sanitation Driver)</option>
                 </select>
