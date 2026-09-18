@@ -18,21 +18,7 @@ const CameraCaptureModal = ({ isOpen, onClose, onCapture }) => {
     return () => stopCamera();
   }, [isOpen]);
 
-  const startCamera = async () => {
-    try {
-      const mediaStream = await navigator.mediaDevices.getUserMedia({
-        video: { facingMode: 'environment', width: { ideal: 1280 }, height: { ideal: 720 } },
-      });
-      setStream(mediaStream);
-      if (videoRef.current) {
-        videoRef.current.srcObject = mediaStream;
-      }
-      setIsCameraActive(true);
-    } catch (err) {
-      console.warn('Camera access denied or unavailable:', err);
-      setIsCameraActive(false);
-    }
-  };
+ useEffect(() => { if (stream && videoRef.current) { videoRef.current.srcObject = stream; } }, [stream, isCameraActive]); const startCamera = async () => { try { const mediaStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment', width: { ideal: 1280 }, height: { ideal: 720 } }, }); setStream(mediaStream); setIsCameraActive(true); } catch (err) { console.warn('Camera access denied or unavailable:', err); setIsCameraActive(false); } };
 
   const stopCamera = () => {
     if (stream) {
