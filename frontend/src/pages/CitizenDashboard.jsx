@@ -18,7 +18,7 @@ const CitizenDashboard = ({ user }) => {
   const [wardNo, setWardNo] = useState(user?.ward_no || 'Ward-101');
   const [landmark, setLandmark] = useState('');
   const [description, setDescription] = useState('');
-  const [selectedCoords, setSelectedCoords] = useState({ lat: 12.9716, lng: 77.5946 });
+  const [selectedCoords, setSelectedCoords] = useState({ lat: 26.2389, lng: 73.0243 }); 
   const [photoFile, setPhotoFile] = useState(null);
   const [photoPreview, setPhotoPreview] = useState(null);
   const [submitting, setSubmitting] = useState(false);
@@ -325,10 +325,10 @@ const CitizenDashboard = ({ user }) => {
                   onChange={(e) => setWardNo(e.target.value)}
                   className="w-full rounded-xl border border-slate-300 py-2.5 text-xs font-medium focus:ring-2 focus:ring-emerald-500 bg-white"
                 >
-                  <option value="Ward-101">Ward-101 (Central Commercial)</option>
-                  <option value="Ward-102">Ward-102 (City Market)</option>
-                  <option value="Ward-103">Ward-103 (MG Road East)</option>
-                  <option value="Ward-104">Ward-104 (Indiranagar Sector 2)</option>
+                  <option value="Ward-101">Ward-101 (Sardarpura)</option> 
+                  <option value="Ward-102">Ward-102 (Sojati Gate)</option>
+                   <option value="Ward-103">Ward-103 (Ratanada)</option>
+                   <option value="Ward-104">Ward-104 (Paota)</option>
                 </select>
               </div>
 

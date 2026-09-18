@@ -12,10 +12,10 @@ const SignUp = ({ onLoginSuccess }) => {
     password: '',
     role: 'citizen',
     ward_no: 'Ward-101',
-    ulb_name: 'Bruhat Bengaluru Mahanagara Palike',
-    district: 'Bengaluru Urban',
-    state: 'Karnataka',
-    pincode: '560001'
+    ulb_name: 'Jodhpur Nagar Palika',
+    district: 'Jodhpur',
+    state: 'Rajasthan',
+    pincode: '342001'
   });
 
   const [loading, setLoading] = useState(false);
@@ -211,10 +211,10 @@ const SignUp = ({ onLoginSuccess }) => {
                   onChange={handleChange}
                   className="w-full rounded-xl border border-slate-300 py-2.5 text-sm focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 bg-white"
                 >
-                  <option value="Ward-101">Ward-101 (Central Commercial)</option>
-                  <option value="Ward-102">Ward-102 (City Market)</option>
-                  <option value="Ward-103">Ward-103 (MG Road East)</option>
-                  <option value="Ward-104">Ward-104 (Indiranagar Sector 2)</option>
+                  <option value="Ward-101">Ward-101 (Sardarpura )</option>
+                  <option value="Ward-102">Ward-102 (Sojati Gate)</option>
+                  <option value="Ward-103">Ward-103 (Ratanada)</option>
+                  <option value="Ward-104">Ward-104 (Paota)</option>
                 </select>
               </div>
               <div>

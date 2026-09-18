@@ -21,7 +21,7 @@ const AdminDashboard = ({ user }) => {
   // Modal Duty Assignment State
   const [selectedComplaint, setSelectedComplaint] = useState(null);
   const [assignStaffId, setAssignStaffId] = useState('');
-  const [assignVehicleId, setAssignVehicleId] = useState('KA-01-GA-1024');
+  const [assignVehicleId, setAssignVehicleId] = useState('RJ-19-GA-1024');
   const [dutyNotes, setDutyNotes] = useState('');
   const [assigning, setAssigning] = useState(false);
 
@@ -103,7 +103,7 @@ const AdminDashboard = ({ user }) => {
             <span>Swachh Municipal Command Center</span>
           </div>
           <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight">
-            {stats?.ulb_name || 'Bruhat Bengaluru Mahanagara Palike'}
+            {stats?.ulb_name || 'Jodhpu Nagar Palika'}
           </h1>
           <p className="text-purple-200/80 text-sm mt-1">
             Officer: <strong className="text-white">{user?.full_name}</strong> | Code: {stats?.ulb_code || 'ULB-01'}
@@ -166,7 +166,7 @@ const AdminDashboard = ({ user }) => {
       <div className="bg-white p-6 rounded-3xl shadow-md border border-slate-200 space-y-4">
         <h2 className="font-extrabold text-lg text-slate-900">Ward Operations & Fleet GPS Map</h2>
         <OpenStreetMap
-          center={[12.9716, 77.5946]}
+         center={[26.2389, 73.0243]}
           zoom={12}
           vehicles={vehicles}
           complaints={complaints}
@@ -359,9 +359,9 @@ const AdminDashboard = ({ user }) => {
                   onChange={(e) => setAssignVehicleId(e.target.value)}
                   className="w-full rounded-xl border border-slate-300 py-2.5 text-xs font-medium bg-white"
                 >
-                  <option value="KA-01-GA-1024">Compactor Truck KA-01-GA-1024</option>
-                  <option value="KA-01-GA-2048">Tipper Auto KA-01-GA-2048</option>
-                  <option value="KA-01-GA-3096">Compactor Truck KA-01-GA-3096</option>
+                  <option value="RJ-19-GA-1024">Compactor Truck RJ-19-GA-1024</option>
+                  <option value="RJ-19-GA-2048">Tipper Auto RJ-19-GA-2048</option>
+                  <option value="RJ-19-GA-3096">Compactor Truck RJ-19-GA-3096</option>
                 </select>
               </div>
 

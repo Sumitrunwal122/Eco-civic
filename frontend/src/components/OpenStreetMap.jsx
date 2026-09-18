@@ -53,7 +53,7 @@ const LocationPicker = ({ onLocationSelect }) => {
 };
 
 const OpenStreetMap = ({
-  center = [12.9716, 77.5946],
+  center = [26.2389, 73.0243],
   zoom = 13,
   vehicles = [],
   complaints = [],

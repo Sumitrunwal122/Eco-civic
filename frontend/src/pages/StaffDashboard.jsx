@@ -11,7 +11,7 @@ const StaffDashboard = ({ user }) => {
   const [loading, setLoading] = useState(true);
   const [actionLoading, setActionLoading] = useState(false);
   const [msg, setMsg] = useState('');
-  const [coords, setCoords] = useState({ lat: 12.9716, lng: 77.5946 });
+  const [coords, setCoords] = useState({ lat: 26.2389, lng:  73.0243 });
 
   // Status update modal
   const [selectedTask, setSelectedTask] = useState(null);
@@ -268,7 +268,7 @@ const StaffDashboard = ({ user }) => {
                   rows={3}
                   value={resolutionNotes}
                   onChange={(e) => setResolutionNotes(e.target.value)}
-                  placeholder="e.g. Waste collected via Compactor Truck KA-01-GA-1024 and sent to DWCC."
+                  placeholder="e.g. Waste collected via Compactor Truck RJ-19-GA-1024 and sent to DWCC."
                   className="w-full rounded-xl border border-slate-300 py-2.5 text-xs focus:ring-2 focus:ring-emerald-500"
                 />
               </div>
