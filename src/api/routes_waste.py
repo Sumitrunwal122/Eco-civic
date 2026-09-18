@@ -126,11 +126,16 @@ async def list_complaints(
 ):
     """
     Lists complaints based on role, ward, status, or citizen ownership.
-    Citizens see their complaints (or ward complaints); Staff/Admin see ward/all complaints.
+    Citizens see their complaints; Staff see ward complaints + anything assigned
+    to them directly; Admin sees ward/all complaints.
     """
     query = {}
     if mine_only or current_user.role == UserRole.CITIZEN:
         query["citizen_id"] = current_user.id
+    elif current_user.role == UserRole.STAFF:
+        ward_clause = {"ward_no": (ward_no or current_user.ward_no or "").upper()}
+        assigned_clause = {"assigned_to.assigned_staff_id": current_user.id}
+        query["$or"] = [ward_clause, assigned_clause]
     elif ward_no:
         query["ward_no"] = ward_no.upper()
 
