@@ -3,7 +3,8 @@ import api from '../services/api';
 import OpenStreetMap from '../components/OpenStreetMap';
 import {
   ShieldCheck, Users, Truck, CheckCircle2, Clock, AlertTriangle,
-  FileSpreadsheet, UserPlus, RefreshCw, Filter, Layers, ChevronRight
+  FileSpreadsheet, UserPlus, RefreshCw, Filter, Layers, ChevronRight,
+  UploadCloud, Download
 } from 'lucide-react';
 
 const AdminDashboard = ({ user }) => {
@@ -24,6 +25,10 @@ const AdminDashboard = ({ user }) => {
   const [assignVehicleId, setAssignVehicleId] = useState('RJ-19-GA-1024');
   const [dutyNotes, setDutyNotes] = useState('');
   const [assigning, setAssigning] = useState(false);
+
+  // Bin Excel Bulk Upload State
+  const [binUploading, setBinUploading] = useState(false);
+  const [binUploadResult, setBinUploadResult] = useState(null);
 
   useEffect(() => {
     fetchAdminData();
@@ -60,7 +65,7 @@ const AdminDashboard = ({ user }) => {
     e.preventDefault();
     if (!selectedComplaint || !assignStaffId) return;
 
-   const staffMember = staffList.find((s) => (s.id || s._id) === assignStaffId);
+    const staffMember = staffList.find((s) => (s.id || s._id) === assignStaffId);
     setAssigning(true);
 
     try {
@@ -91,6 +96,46 @@ const AdminDashboard = ({ user }) => {
     } catch (err) {
       console.error(err);
     }
+  };
+
+  const handleBinExcelUpload = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setBinUploading(true);
+    setBinUploadResult(null);
+
+    const formData = new FormData();
+    formData.append('file', file);
+
+    try {
+      const res = await api.post('/api/admin/bins/upload', formData, {
+        headers: { 'Content-Type': 'multipart/form-data' }
+      });
+      setBinUploadResult({ success: true, ...res.data });
+    } catch (err) {
+      setBinUploadResult({
+        success: false,
+        detail: err.response?.data?.detail || 'Upload failed. Please check the file format.'
+      });
+    } finally {
+      setBinUploading(false);
+      e.target.value = '';
+    }
+  };
+
+  const downloadBinTemplate = () => {
+    const csvContent =
+      'ward_no,landmark,latitude,longitude,wet_fill,dry_fill,hazardous_fill\n' +
+      'Ward-101,Near Sojati Gate Market,26.2413,73.0257,20,10,5\n' +
+      'Ward-102,Sardarpura Vegetable Mandi Entrance,26.2343,73.0137,15,25,0\n';
+    const blob = new Blob([csvContent], { type: 'text/csv' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'eco-civic-bin-upload-template.csv';
+    link.click();
+    URL.revokeObjectURL(url);
   };
 
   return (
@@ -166,12 +211,75 @@ const AdminDashboard = ({ user }) => {
       <div className="bg-white p-6 rounded-3xl shadow-md border border-slate-200 space-y-4">
         <h2 className="font-extrabold text-lg text-slate-900">Ward Operations & Fleet GPS Map</h2>
         <OpenStreetMap
-         center={[26.2389, 73.0243]}
+          center={[26.2389, 73.0243]}
           zoom={12}
           vehicles={vehicles}
           complaints={complaints}
           height="360px"
         />
+      </div>
+
+      {/* Bulk Community Bin Upload via Excel/CSV */}
+      <div className="bg-white p-6 sm:p-8 rounded-3xl shadow-md border border-slate-200 space-y-4">
+        <div>
+          <h2 className="font-extrabold text-xl text-slate-900 flex items-center space-x-2">
+            <UploadCloud className="w-5 h-5 text-purple-600" />
+            <span>Bulk Add Community Bins (Excel / CSV)</span>
+          </h2>
+          <p className="text-xs text-slate-500 mt-1">
+            Upload an .xlsx or .csv sheet with columns: <code className="bg-slate-100 px-1 rounded">ward_no, landmark, latitude, longitude</code>
+            {' '}(optional: <code className="bg-slate-100 px-1 rounded">wet_fill, dry_fill, hazardous_fill</code>).
+          </p>
+        </div>
+
+        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
+          <label className="cursor-pointer bg-purple-600 hover:bg-purple-500 text-white px-4 py-2.5 rounded-xl text-xs font-bold shadow flex items-center space-x-2 transition-all">
+            <UploadCloud className="w-4 h-4" />
+            <span>{binUploading ? 'Uploading...' : 'Choose File & Upload'}</span>
+            <input
+              type="file"
+              accept=".xlsx,.xlsm,.csv"
+              onChange={handleBinExcelUpload}
+              disabled={binUploading}
+              className="hidden"
+            />
+          </label>
+
+          <button
+            onClick={downloadBinTemplate}
+            className="border border-slate-300 text-slate-700 hover:bg-slate-50 px-4 py-2.5 rounded-xl text-xs font-bold flex items-center space-x-2 transition-all"
+          >
+            <Download className="w-4 h-4" />
+            <span>Download Sample Template</span>
+          </button>
+        </div>
+
+        {binUploadResult && (
+          <div className={`p-4 rounded-2xl text-xs font-medium border ${
+            binUploadResult.success
+              ? 'bg-emerald-50 border-emerald-200 text-emerald-800'
+              : 'bg-rose-50 border-rose-200 text-rose-700'
+          }`}>
+            {binUploadResult.success ? (
+              <>
+                <p className="font-bold mb-1">
+                  ✓ {binUploadResult.inserted} bin{binUploadResult.inserted === 1 ? '' : 's'} added
+                  {binUploadResult.skipped > 0 && `, ${binUploadResult.skipped} row(s) skipped`}.
+                </p>
+                {binUploadResult.errors?.length > 0 && (
+                  <ul className="list-disc list-inside mt-2 space-y-0.5 text-rose-700">
+                    {binUploadResult.errors.map((e, i) => <li key={i}>{e}</li>)}
+                  </ul>
+                )}
+              </>
+            ) : (
+              <p className="flex items-start space-x-2">
+                <AlertTriangle className="w-4 h-4 shrink-0 mt-0.5" />
+                <span>{binUploadResult.detail}</span>
+              </p>
+            )}
+          </div>
+        )}
       </div>
 
       {/* Complaint Triage & Duty Allocation Board */}
@@ -346,7 +454,11 @@ const AdminDashboard = ({ user }) => {
                   className="w-full rounded-xl border border-slate-300 py-2.5 text-xs font-medium bg-white"
                 >
                   <option value="">-- Choose Worker --</option>
-                   {staffList.map((s) => ( <option key={s.id || s._id} value={s.id || s._id}> {s.full_name} ({s.phone}) - {s.ward_no} </option> ))}
+                  {staffList.map((s) => (
+                    <option key={s.id || s._id} value={s.id || s._id}>
+                      {s.full_name} ({s.phone}) - {s.ward_no}
+                    </option>
+                  ))}
                   {/* Fallback option if staff list is empty */}
                   <option value="staff_demo_01">Ramesh Kumar (Sanitation Driver)</option>
                 </select>

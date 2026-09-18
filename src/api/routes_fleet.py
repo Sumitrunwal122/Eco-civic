@@ -1,11 +1,27 @@
 import asyncio
 from typing import List, Dict, Any
 from fastapi import APIRouter, WebSocket, WebSocketDisconnect, Depends
+from src.database.connection import get_db, db_manager
 from src.utils.geo_helpers import fleet_simulator, INITIAL_COMMUNITY_BINS
 from src.utils.logger import get_logger
 
 logger = get_logger("api.routes_fleet")
 router = APIRouter(prefix="/api/fleet", tags=["Municipal Fleet Vehicles & Telemetry"])
+
+
+async def _get_live_bins() -> List[Dict[str, Any]]:
+    """Fetches current bins from MongoDB, seeding with defaults on first run."""
+    db = db_manager.db
+    if db is None:
+        return INITIAL_COMMUNITY_BINS
+    count = await db.bins.count_documents({})
+    if count == 0:
+        await db.bins.insert_many([{**b, "_id": b["bin_id"]} for b in INITIAL_COMMUNITY_BINS])
+    cursor = db.bins.find({})
+    results = await cursor.to_list(length=500)
+    for r in results:
+        r.pop("_id", None)
+    return results
 
 
 class ConnectionManager:
@@ -49,11 +65,12 @@ async def websocket_fleet_endpoint(websocket: WebSocket):
         while True:
             # Generate simulated movement step for trucks
             fleet_data = fleet_simulator.step()
+            live_bins = await _get_live_bins()
             payload = {
                 "event_type": "FLEET_GPS_UPDATE",
-                "timestamp": fleet_simulator.state["KA-01-GA-1024"]["latitude"],  # heartbeat marker
+                "timestamp": fleet_simulator.state["RJ-19-GA-1024"]["latitude"],  # heartbeat marker
                 "vehicles": fleet_data,
-                "community_bins": INITIAL_COMMUNITY_BINS
+                "community_bins": live_bins
             }
             await websocket.send_json(payload)
             await asyncio.sleep(2.0)
@@ -77,7 +94,8 @@ async def get_fleet_trucks_snapshot():
 @router.get("/bins")
 async def get_community_bins_snapshot():
     """Returns Swachh Bharat community dustbin locations and fill levels."""
+    live_bins = await _get_live_bins()
     return {
         "status": "success",
-        "community_bins": INITIAL_COMMUNITY_BINS
+        "community_bins": live_bins
     }
