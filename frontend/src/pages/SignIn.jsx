@@ -42,8 +42,7 @@ const SignIn = ({ onLoginSuccess }) => {
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-emerald-950 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md text-center">
         <div className="inline-flex p-3 rounded-2xl bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 mb-4 shadow-xl">
-          <div className="inline-flex p-3 rounded-2xl bg-white mb-4 shadow-xl"> <img src={logo} alt="ECO-civic logo" className="w-12 h-12 object-contain" /> </div>
-        </div>
+           <img src={logo} alt="ECO-civic logo" className="w-10 h-10 object-contain group-hover:scale-105 transition-transform" />
         <h2 className="text-3xl font-extrabold text-white tracking-tight">ECO-civic Sign In</h2>
         <p className="mt-2 text-sm text-emerald-300 font-medium">
           Access your Urban Local Body (ULB) Dashboard
