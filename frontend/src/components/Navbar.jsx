@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import {  ShieldCheck, UserCheck, LogOut, Sparkles } from 'lucide-react';
- import logo from '../components/logo.png';
+import { ShieldCheck, UserCheck, LogOut, Sparkles } from 'lucide-react';
+import logo from '../components/logo.png';
 
 const Navbar = ({ user, onLogout }) => {
   const navigate = useNavigate();
@@ -28,9 +28,7 @@ const Navbar = ({ user, onLogout }) => {
         <div className="flex justify-between items-center h-16">
           {/* Logo & Brand */}
           <Link to="/" className="flex items-center space-x-3 group">
-            <div className="bg-gradient-to-tr from-emerald-500 to-green-400 p-2 rounded-xl text-slate-950 group-hover:scale-105 transition-transform">
-             <img src={logo} alt="ECO-civic logo" className="w-10 h-10 object-contain group-hover:scale-105 transition-transform" />
-            </div>
+            <img src={logo} alt="ECO-civic logo" className="w-10 h-10 object-contain group-hover:scale-105 transition-transform" />
             <div>
               <div className="flex items-center space-x-2">
                 <span className="font-extrabold text-lg tracking-tight bg-gradient-to-r from-emerald-400 to-teal-200 bg-clip-text text-transparent">
