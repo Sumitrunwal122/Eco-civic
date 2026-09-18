@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import {  ShieldCheck, UserCheck, LogOut, Sparkles } from 'lucide-react';
- import logo from '../assets/logo.png';
+ import logo from '../components/logo.png';
 
 const Navbar = ({ user, onLogout }) => {
   const navigate = useNavigate();

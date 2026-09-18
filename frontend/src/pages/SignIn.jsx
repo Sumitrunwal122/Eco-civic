@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import api from '../services/api';
 import { LogIn, AlertCircle, Phone, Lock } from 'lucide-react';
-import logo from '../assets/logo.png'; 
+import logo from '../components/logo.png'; 
 
 const SignIn = ({ onLoginSuccess }) => {
   const navigate = useNavigate();
