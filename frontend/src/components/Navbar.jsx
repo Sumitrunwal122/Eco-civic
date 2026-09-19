@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { ShieldCheck, UserCheck, LogOut, Sparkles } from 'lucide-react';
+import { ShieldCheck, UserCheck, LogOut } from 'lucide-react';
 import logo from '../components/logo.png';
 
 const Navbar = ({ user, onLogout }) => {
@@ -69,7 +69,6 @@ const Navbar = ({ user, onLogout }) => {
                 to="/signup"
                 className="bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-semibold px-4 py-1.5 rounded-lg shadow transition-all flex items-center space-x-1.5"
               >
-                <Sparkles className="w-4 h-4" />
                 <span>Register</span>
               </Link>
             </div>

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import api from '../services/api';
-import { UserCheck, ShieldCheck,  Sparkles, AlertCircle, Phone, Lock, User, Building } from 'lucide-react';
+import { UserCheck, ShieldCheck, AlertCircle, Phone, Lock, User, Building } from 'lucide-react';
 import logo from '../components/logo.png';
 const SignUp = ({ onLoginSuccess }) => {
   const navigate = useNavigate();
@@ -240,7 +240,6 @@ const SignUp = ({ onLoginSuccess }) => {
                 <span>Registering Account...</span>
               ) : (
                 <>
-                  <Sparkles className="w-4 h-4" />
                   <span>Create Account</span>
                 </>
               )}
