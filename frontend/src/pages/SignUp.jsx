@@ -1,8 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import api from '../services/api';
-import { UserCheck, ShieldCheck, AlertCircle, Phone, Lock, User, Building } from 'lucide-react';
+import { UserCheck, ShieldCheck, Sparkles, AlertCircle, Phone, Lock, User, Building } from 'lucide-react';
 import logo from '../components/logo.png';
+
+// Friendly locality names for the original seeded wards; any ward beyond
+// these (added later via bulk bin upload) just shows its plain code.
+const WARD_LOCALITY_NAMES = {
+  'Ward-101': 'Sardarpura',
+  'Ward-102': 'Sojati Gate',
+  'Ward-103': 'Ratanada',
+  'Ward-104': 'Paota'
+};
+
 const SignUp = ({ onLoginSuccess }) => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
@@ -12,7 +22,7 @@ const SignUp = ({ onLoginSuccess }) => {
     password: '',
     role: 'citizen',
     ward_no: 'Ward-101',
-    ulb_name: 'Jodhpur Nagar Palika',
+    ulb_name: 'Jodhpur Municipal Corporation',
     district: 'Jodhpur',
     state: 'Rajasthan',
     pincode: '342001'
@@ -20,6 +30,13 @@ const SignUp = ({ onLoginSuccess }) => {
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [availableWards, setAvailableWards] = useState([]);
+
+  useEffect(() => {
+    api.get('/api/waste/wards')
+      .then((res) => setAvailableWards(res.data || []))
+      .catch((err) => console.warn('Could not load ward list:', err));
+  }, []);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -71,8 +88,9 @@ const SignUp = ({ onLoginSuccess }) => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-emerald-950 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md text-center">
-        <div className="inline-flex p-3 rounded-2xl bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 mb-4 shadow-xl">
-          <div className="inline-flex mb-4"> <img src={logo} alt="ECO-civic logo" className="w-16 h-16 object-contain" /> </div>        </div>
+        <div className="inline-flex mb-4">
+          <img src={logo} alt="ECO-civic logo" className="w-16 h-16 object-contain" />
+        </div>
         <h2 className="text-3xl font-extrabold text-white tracking-tight">ECO-civic ULB Portal</h2>
         <p className="mt-2 text-sm text-emerald-300 font-medium">
           Indian Municipal Civic Tech Waste Management Registration
@@ -211,10 +229,11 @@ const SignUp = ({ onLoginSuccess }) => {
                   onChange={handleChange}
                   className="w-full rounded-xl border border-slate-300 py-2.5 text-sm focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 bg-white"
                 >
-                  <option value="Ward-101">Ward-101 (Sardarpura )</option>
-                  <option value="Ward-102">Ward-102 (Sojati Gate)</option>
-                  <option value="Ward-103">Ward-103 (Ratanada)</option>
-                  <option value="Ward-104">Ward-104 (Paota)</option>
+                  {availableWards.map((w) => (
+                    <option key={w} value={w}>
+                      {w}{WARD_LOCALITY_NAMES[w] ? ` (${WARD_LOCALITY_NAMES[w]})` : ''}
+                    </option>
+                  ))}
                 </select>
               </div>
               <div>
@@ -225,7 +244,7 @@ const SignUp = ({ onLoginSuccess }) => {
                   required
                   value={formData.pincode}
                   onChange={handleChange}
-                  placeholder="560001"
+                  placeholder="342001"
                   className="w-full rounded-xl border border-slate-300 py-2.5 text-sm focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 font-mono"
                 />
               </div>
@@ -240,6 +259,7 @@ const SignUp = ({ onLoginSuccess }) => {
                 <span>Registering Account...</span>
               ) : (
                 <>
+                  <Sparkles className="w-4 h-4" />
                   <span>Create Account</span>
                 </>
               )}
