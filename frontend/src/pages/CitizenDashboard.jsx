@@ -245,7 +245,7 @@ const CitizenDashboard = ({ user }) => {
         <div className="bg-gradient-to-b from-slate-900 to-slate-950 text-white p-6 rounded-3xl shadow-xl border border-slate-800 flex flex-col justify-between">
           <div>
             <div className="flex items-center space-x-2 text-emerald-400 font-bold text-sm mb-2">
-              <span>Gemini Vision AI Engine</span>
+              <span>Vision-AI</span>
             </div>
             <h3 className="text-xl font-bold text-white mb-2">Instant Swachh Waste Segregator</h3>
             <p className="text-xs text-slate-400 mb-6">
