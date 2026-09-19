@@ -158,3 +158,30 @@ async def get_complaint_detail(
     if not doc:
         raise HTTPException(status_code=404, detail="Complaint not found")
     return ComplaintResponse.model_validate(doc)
+
+
+@router.get("/wards", response_model=List[str])
+async def list_available_wards(db=Depends(get_db)):
+    """
+    Returns all ward numbers currently in use across uploaded bins and filed
+    complaints, so forms (signup, complaint filing) can offer real, live wards
+    instead of a hardcoded list. Public endpoint (no auth) so it also works
+    on the pre-login Sign Up page.
+    """
+    bin_wards = await db.bins.distinct("ward_no")
+    complaint_wards = await db.complaints.distinct("ward_no")
+    raw_wards = set(bin_wards) | set(complaint_wards)
+
+    def normalize(w: str) -> str:
+        # "WARD-101" / "ward-101" -> "Ward-101" (matches the app's display convention)
+        parts = w.strip().split("-", 1)
+        if len(parts) == 2:
+            return f"{parts[0].capitalize()}-{parts[1]}"
+        return w.strip().capitalize()
+
+    all_wards = sorted({normalize(w) for w in raw_wards if w})
+
+    if not all_wards:
+        all_wards = ["Ward-101", "Ward-102", "Ward-103", "Ward-104"]
+
+    return all_wards

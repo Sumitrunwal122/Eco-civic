@@ -8,17 +8,27 @@ import {
   Trash2, Layers, RefreshCw, Send, ShieldAlert, Info
 } from 'lucide-react';
 
+// Friendly locality names for the original seeded wards; any ward beyond
+// these (added later via bulk bin upload) just shows its plain code.
+const WARD_LOCALITY_NAMES = {
+  'Ward-101': 'Sardarpura',
+  'Ward-102': 'Sojati Gate',
+  'Ward-103': 'Ratanada',
+  'Ward-104': 'Paota'
+};
+
 const CitizenDashboard = ({ user }) => {
   const [vehicles, setVehicles] = useState([]);
   const [communityBins, setCommunityBins] = useState([]);
   const [complaints, setComplaints] = useState([]);
   const [loadingComplaints, setLoadingComplaints] = useState(false);
+  const [availableWards, setAvailableWards] = useState([]);
 
   // Form State
   const [wardNo, setWardNo] = useState(user?.ward_no || 'Ward-101');
   const [landmark, setLandmark] = useState('');
   const [description, setDescription] = useState('');
-  const [selectedCoords, setSelectedCoords] = useState({ lat: 26.2389, lng: 73.0243 }); 
+  const [selectedCoords, setSelectedCoords] = useState({ lat: 26.2389, lng: 73.0243 });
   const [photoFile, setPhotoFile] = useState(null);
   const [photoPreview, setPhotoPreview] = useState(null);
   const [submitting, setSubmitting] = useState(false);
@@ -37,6 +47,11 @@ const CitizenDashboard = ({ user }) => {
   useEffect(() => {
     // 1. Fetch snapshot & initial complaints
     fetchInitialData();
+
+    // 1b. Fetch live ward list (from uploaded bins / filed complaints)
+    api.get('/api/waste/wards')
+      .then((res) => setAvailableWards(res.data || []))
+      .catch((err) => console.warn('Could not load ward list, using defaults:', err));
 
     // 2. Connect WebSocket stream for real-time fleet vehicles
     fleetWS.connect();
@@ -325,10 +340,14 @@ const CitizenDashboard = ({ user }) => {
                   onChange={(e) => setWardNo(e.target.value)}
                   className="w-full rounded-xl border border-slate-300 py-2.5 text-xs font-medium focus:ring-2 focus:ring-emerald-500 bg-white"
                 >
-                  <option value="Ward-101">Ward-101 (Sardarpura)</option> 
-                  <option value="Ward-102">Ward-102 (Sojati Gate)</option>
-                   <option value="Ward-103">Ward-103 (Ratanada)</option>
-                   <option value="Ward-104">Ward-104 (Paota)</option>
+                  {(availableWards.length > 0
+                    ? availableWards
+                    : ['Ward-101', 'Ward-102', 'Ward-103', 'Ward-104']
+                  ).map((w) => (
+                    <option key={w} value={w}>
+                      {w}{WARD_LOCALITY_NAMES[w] ? ` (${WARD_LOCALITY_NAMES[w]})` : ''}
+                    </option>
+                  ))}
                 </select>
               </div>
 
@@ -339,7 +358,7 @@ const CitizenDashboard = ({ user }) => {
                   required
                   value={landmark}
                   onChange={(e) => setLandmark(e.target.value)}
-                  placeholder="e.g. Near Bus Stop, Main Market"
+                  placeholder="e.g. Near Ghanta Ghar, Clock Tower Market"
                   className="w-full rounded-xl border border-slate-300 py-2.5 text-xs focus:ring-2 focus:ring-emerald-500"
                 />
               </div>
