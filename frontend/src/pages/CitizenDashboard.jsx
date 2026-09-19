@@ -340,14 +340,7 @@ const CitizenDashboard = ({ user }) => {
                   onChange={(e) => setWardNo(e.target.value)}
                   className="w-full rounded-xl border border-slate-300 py-2.5 text-xs font-medium focus:ring-2 focus:ring-emerald-500 bg-white"
                 >
-                  {(availableWards.length > 0
-                    ? availableWards
-                    : ['Ward-101', 'Ward-102', 'Ward-103', 'Ward-104']
-                  ).map((w) => (
-                    <option key={w} value={w}>
-                      {w}{WARD_LOCALITY_NAMES[w] ? ` (${WARD_LOCALITY_NAMES[w]})` : ''}
-                    </option>
-                  ))}
+                  {availableWards.map((w) => ( <option key={w} value={w}> {w}{WARD_LOCALITY_NAMES[w] ? ` (${WARD_LOCALITY_NAMES[w]})` : ''} </option> ))}
                 </select>
               </div>
 
