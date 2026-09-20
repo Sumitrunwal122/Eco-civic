@@ -6,9 +6,15 @@ class FleetWebSocketClient {
   }
 
   connect() {
-    const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
-    const host = window.location.hostname === 'localhost' ? '127.0.0.1:8000' : window.location.host;
-    const wsUrl = `${protocol}//${host}/api/fleet/ws`;
+    let wsUrl = '';
+    const apiUrl = import.meta.env.VITE_API_URL;
+    if (apiUrl) {
+      wsUrl = apiUrl.replace(/^http/, 'ws') + '/api/fleet/ws';
+    } else {
+      const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+      const host = window.location.hostname === 'localhost' ? '127.0.0.1:8000' : window.location.host;
+      wsUrl = `${protocol}//${host}/api/fleet/ws`;
+    }
 
     console.log(`Connecting to Fleet WebSocket: ${wsUrl}`);
     this.ws = new WebSocket(wsUrl);

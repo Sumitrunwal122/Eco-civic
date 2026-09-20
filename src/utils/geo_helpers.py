@@ -2,43 +2,43 @@ import math
 import random
 from typing import List, Dict, Any, Tuple
 
-# Pre-defined Ward centroids and patrol route waypoints in Bengaluru (ULB-KA-BLR-01)
+# Pre-defined Ward centroids and patrol route waypoints in Jodhpur (ULB-RJ-JDH-01)
 DEFAULT_MUNICIPAL_ROUTES: Dict[str, List[Tuple[float, float]]] = {
     "Ward-101": [
-        (12.9716, 77.5946),
-        (12.9730, 77.5970),
-        (12.9755, 77.5995),
-        (12.9780, 77.5960),
-        (12.9760, 77.5920),
-        (12.9735, 77.5910),
+        (26.2389, 73.0243),
+        (26.2403, 73.0267),
+        (26.2428, 73.0292),
+        (26.2453, 73.0257),
+        (26.2433, 73.0217),
+        (26.2408, 73.0207),
     ],
     "Ward-102": [
-        (12.9650, 77.5850),
-        (12.9680, 77.5875),
-        (12.9700, 77.5890),
-        (12.9690, 77.5820),
-        (12.9660, 77.5800),
+        (26.2323, 73.0147),
+        (26.2353, 73.0172),
+        (26.2373, 73.0187),
+        (26.2363, 73.0117),
+        (26.2333, 73.0097),
     ],
     "Ward-103": [
-        (12.9800, 77.6050),
-        (12.9830, 77.6080),
-        (12.9860, 77.6100),
-        (12.9840, 77.6140),
-        (12.9810, 77.6110),
+        (26.2473, 73.0347),
+        (26.2503, 73.0377),
+        (26.2533, 73.0397),
+        (26.2513, 73.0437),
+        (26.2483, 73.0407),
     ],
     "Ward-104": [
-        (12.9550, 77.6200),
-        (12.9580, 77.6230),
-        (12.9610, 77.6260),
-        (12.9590, 77.6290),
-        (12.9560, 77.6240),
+        (26.2223, 73.0497),
+        (26.2253, 73.0527),
+        (26.2283, 73.0557),
+        (26.2263, 73.0587),
+        (26.2233, 73.0537),
     ]
 }
 
 # Initial fleet vehicles
 INITIAL_MUNICIPAL_VEHICLES = [
     {
-        "vehicle_id": "KA-01-GA-1024",
+        "vehicle_id": "RJ-19-GA-1024",
         "driver_name": "Ramesh Kumar",
         "driver_phone": "+919876543210",
         "ward_no": "Ward-101",
@@ -50,8 +50,8 @@ INITIAL_MUNICIPAL_VEHICLES = [
         "fuel_percent": 74
     },
     {
-        "vehicle_id": "KA-01-GA-2048",
-        "driver_name": "Suresh Gowda",
+        "vehicle_id": "RJ-19-GA-2048",
+        "driver_name": "Suresh Rathore",
         "driver_phone": "+919876543211",
         "ward_no": "Ward-102",
         "vehicle_type": "Tipper Auto",
@@ -62,8 +62,8 @@ INITIAL_MUNICIPAL_VEHICLES = [
         "fuel_percent": 62
     },
     {
-        "vehicle_id": "KA-01-GA-3096",
-        "driver_name": "Anil Basumatary",
+        "vehicle_id": "RJ-19-GA-3096",
+        "driver_name": "Anil Choudhary",
         "driver_phone": "+919876543212",
         "ward_no": "Ward-103",
         "vehicle_type": "Compactor Truck",
@@ -74,8 +74,8 @@ INITIAL_MUNICIPAL_VEHICLES = [
         "fuel_percent": 48
     },
     {
-        "vehicle_id": "KA-01-GA-4112",
-        "driver_name": "Muniswamy R",
+        "vehicle_id": "RJ-19-GA-4112",
+        "driver_name": "Mahendra Singh",
         "driver_phone": "+919876543213",
         "ward_no": "Ward-104",
         "vehicle_type": "Mini LCV",
@@ -92,9 +92,9 @@ INITIAL_COMMUNITY_BINS = [
     {
         "bin_id": "BIN-W101-01",
         "ward_no": "Ward-101",
-        "landmark": "Near Commercial Street Metro Gate A",
-        "latitude": 12.9740,
-        "longitude": 77.5960,
+        "landmark": "Near Sojati Gate Market",
+        "latitude": 26.2413,
+        "longitude": 73.0257,
         "bin_types": [
             {"category": "Wet Waste", "color": "Green", "fill_level": 65},
             {"category": "Dry Waste", "color": "Blue", "fill_level": 40},
@@ -104,9 +104,9 @@ INITIAL_COMMUNITY_BINS = [
     {
         "bin_id": "BIN-W102-01",
         "ward_no": "Ward-102",
-        "landmark": "City Market Vegetable Mandi Entrance",
-        "latitude": 12.9670,
-        "longitude": 77.5840,
+        "landmark": "Sardarpura Vegetable Mandi Entrance",
+        "latitude": 26.2343,
+        "longitude": 73.0137,
         "bin_types": [
             {"category": "Wet Waste", "color": "Green", "fill_level": 92},
             {"category": "Dry Waste", "color": "Blue", "fill_level": 78},
@@ -116,9 +116,9 @@ INITIAL_COMMUNITY_BINS = [
     {
         "bin_id": "BIN-W103-01",
         "ward_no": "Ward-103",
-        "landmark": "MG Road Brigade Junction",
-        "latitude": 12.9820,
-        "longitude": 77.6070,
+        "landmark": "Ratanada Circle Junction",
+        "latitude": 26.2493,
+        "longitude": 73.0367,
         "bin_types": [
             {"category": "Wet Waste", "color": "Green", "fill_level": 45},
             {"category": "Dry Waste", "color": "Blue", "fill_level": 55},
@@ -137,7 +137,7 @@ class VehicleMovementSimulator:
         self.state: Dict[str, Dict[str, Any]] = {}
         for v in INITIAL_MUNICIPAL_VEHICLES:
             ward = v["ward_no"]
-            waypoints = DEFAULT_MUNICIPAL_ROUTES.get(ward, [(12.9716, 77.5946)])
+            waypoints = DEFAULT_MUNICIPAL_ROUTES.get(ward, [(26.2389, 73.0243)])
             self.state[v["vehicle_id"]] = {
                 **v,
                 "current_waypoint_idx": 0,

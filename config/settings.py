@@ -34,10 +34,10 @@ class Settings(BaseSettings):
     GEMINI_MODEL: str = "gemini-1.5-flash"
 
     # Municipal ULB Information
-    MUNICIPAL_NAME: str = "Bruhat Bengaluru Mahanagara Palike (BBMP)"
-    MUNICIPAL_CODE: str = "ULB-KA-BLR-01"
-    DEFAULT_LATITUDE: float = 12.9716
-    DEFAULT_LONGITUDE: float = 77.5946
+    MUNICIPAL_NAME: str = "Jodhpur Nagar Palika(JNP)"
+    MUNICIPAL_CODE: str = "ULB-RJ-JDH-01"
+    DEFAULT_LATITUDE: float = 26.2389
+    DEFAULT_LONGITUDE: float = 73.0243
 
     # File Storage
     UPLOAD_DIR: str = str(BASE_DIR / "uploads")
