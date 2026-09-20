@@ -1,3 +1,54 @@
+@import 'leaflet/dist/leaflet.css';
+@import url('https://fonts.googleapis.com/css2?family=Mukta:wght@400;500;600;700;800&family=Spectral:wght@500;600;700;800&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --paper: #FAF8F5;
+}
+
+body {
+  font-family: 'Mukta', system-ui, sans-serif;
+  background-color: var(--paper);
+}
+
+/* Headings carry the civic/gazette identity: a serif display face,
+   distinct from the Mukta body text used everywhere else. */
+h1, h2, h3 {
+  font-family: 'Spectral', Georgia, serif;
+  letter-spacing: -0.01em;
+}
+
+/* Visible keyboard focus, in the brand indigo rather than a generic blue ring */
+:focus-visible {
+  outline: 2px solid #233A5C;
+  outline-offset: 2px;
+}
+
+/* Respect reduced-motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Custom Leaflet Map Container fixes */
+.leaflet-container {
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+  border-radius: 0.75rem;
+}
+
+.custom-div-icon {
+  background: transparent;
+  border: none;
+}
+
 /* Ambient glow — soft color blooms behind the dark hero banners, in the
    citizen-green and admin-aubergine brand tones — plus a curved dashed
    road running diagonally through the banner. */
@@ -15,11 +66,7 @@
   background-repeat: no-repeat;
   background-image:
     radial-gradient(240px 240px at 8% 0%, rgba(30,122,92,0.38), transparent 70%),
-    radial-gradient(220px 220px at 96% 100%, rgba(158,84,158,0.30), transparent 70%),
-    url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%201400%20220%27%20preserveAspectRatio%3D%27none%27%3E%3Cpath%20d%3D%27M%20-60%2C170%20C%20200%2C60%20420%2C230%20700%2C110%20S%201180%2C20%201460%2C120%27%20fill%3D%27none%27%20stroke%3D%27white%27%20stroke-width%3D%273%27%20stroke-dasharray%3D%2712%2014%27%20stroke-linecap%3D%27round%27%3E%3Canimate%20attributeName%3D%27stroke-dashoffset%27%20from%3D%270%27%20to%3D%27-52%27%20dur%3D%271.6s%27%20repeatCount%3D%27indefinite%27/%3E%3C/path%3E%3C/svg%3E");
-  background-size: auto, auto, 100% 100%;
-  background-position: 0 0, 0 0, center bottom;
-  opacity: 1;
+    radial-gradient(220px 220px at 96% 100%, rgba(158,84,158,0.30), transparent 70%);
   animation: eco-glow-drift 14s ease-in-out infinite alternate;
 }
 
@@ -28,16 +75,44 @@
   position: absolute;
   top: 0;
   left: 0;
-  width: 50px;
-  height: 27px;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.jali-road {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  overflow: visible;
+}
+
+.jali-road-path {
+  fill: none;
+  stroke: rgba(255,255,255,0.45);
+  stroke-width: 3;
+  stroke-dasharray: 12 14;
+  stroke-linecap: round;
+  animation: eco-dash-march 1.6s linear infinite;
+}
+
+.jali-truck {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 46px;
+  height: 24px;
   pointer-events: none;
   z-index: 0;
   background-repeat: no-repeat;
   background-size: contain;
-  background-image:
-    url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%2064%2034%27%3E%3Crect%20x%3D%272%27%20y%3D%276%27%20width%3D%2736%27%20height%3D%2718%27%20rx%3D%273%27%20fill%3D%27%231E7A5C%27/%3E%3Crect%20x%3D%274%27%20y%3D%279%27%20width%3D%2730%27%20height%3D%274%27%20fill%3D%27white%27%20opacity%3D%270.45%27/%3E%3Crect%20x%3D%2738%27%20y%3D%2710%27%20width%3D%2718%27%20height%3D%2714%27%20rx%3D%273%27%20fill%3D%27%23233A5C%27/%3E%3Crect%20x%3D%2742%27%20y%3D%2713%27%20width%3D%279%27%20height%3D%277%27%20rx%3D%271%27%20fill%3D%27%23BFD9FF%27/%3E%3Ccircle%20cx%3D%2713%27%20cy%3D%2728%27%20r%3D%275%27%20fill%3D%27%2316130F%27/%3E%3Ccircle%20cx%3D%2713%27%20cy%3D%2728%27%20r%3D%272%27%20fill%3D%27%23888%27/%3E%3Ccircle%20cx%3D%2747%27%20cy%3D%2728%27%20r%3D%275%27%20fill%3D%27%2316130F%27/%3E%3Ccircle%20cx%3D%2747%27%20cy%3D%2728%27%20r%3D%272%27%20fill%3D%27%23888%27/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2064%2034'%3E%3Crect%20x='2'%20y='6'%20width='36'%20height='18'%20rx='3'%20fill='%231E7A5C'/%3E%3Crect%20x='4'%20y='9'%20width='30'%20height='4'%20fill='%23ffffff'%20opacity='0.45'/%3E%3Crect%20x='38'%20y='10'%20width='18'%20height='14'%20rx='3'%20fill='%23233A5C'/%3E%3Crect%20x='42'%20y='13'%20width='9'%20height='7'%20rx='1'%20fill='%23BFD9FF'/%3E%3Ccircle%20cx='13'%20cy='28'%20r='5'%20fill='%2316130F'/%3E%3Ccircle%20cx='13'%20cy='28'%20r='2'%20fill='%23888888'/%3E%3Ccircle%20cx='47'%20cy='28'%20r='5'%20fill='%2316130F'/%3E%3Ccircle%20cx='47'%20cy='28'%20r='2'%20fill='%23888888'/%3E%3C/svg%3E");
   offset-path: path('M -60,170 C 200,60 420,230 700,110 S 1180,20 1460,120');
-  offset-rotate: auto 0deg;
+  offset-rotate: auto;
   offset-distance: 0%;
   animation: eco-truck-drive 17s linear infinite;
 }
@@ -45,6 +120,11 @@
 @keyframes eco-glow-drift {
   0%   { transform: translate(0, 0) scale(1); }
   100% { transform: translate(18px, 12px) scale(1.06); }
+}
+
+@keyframes eco-dash-march {
+  from { stroke-dashoffset: 0; }
+  to   { stroke-dashoffset: -52; }
 }
 
 @keyframes eco-truck-drive {
@@ -57,11 +137,21 @@
   z-index: 1;
 }
 
-/* Freeze the drive/glow animation instead of letting it snap-jump when
-   motion is reduced to ~0ms by the global reduced-motion rule below. */
 @media (prefers-reduced-motion: reduce) {
-  .jali-pattern::after {
+  .jali-truck {
     animation: none;
     offset-distance: 0%;
   }
+  .jali-road-path {
+    animation: none;
+  }
+}
+
+/* One deliberate press interaction for primary buttons, applied via the
+   .btn-press utility rather than scattered per-component hover rules. */
+.btn-press {
+  transition: transform 150ms ease, box-shadow 150ms ease;
+}
+.btn-press:active {
+  transform: scale(0.97);
 }
