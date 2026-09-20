@@ -104,17 +104,18 @@ h1, h2, h3 {
   position: absolute;
   top: 0;
   left: 0;
-  width: 46px;
-  height: 24px;
+  width: 92px;
+  height: 48px;
   pointer-events: none;
   z-index: 0;
   background-repeat: no-repeat;
   background-size: contain;
   background-image: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2064%2034'%3E%3Crect%20x='2'%20y='6'%20width='36'%20height='18'%20rx='3'%20fill='%231E7A5C'/%3E%3Crect%20x='4'%20y='9'%20width='30'%20height='4'%20fill='%23ffffff'%20opacity='0.45'/%3E%3Crect%20x='38'%20y='10'%20width='18'%20height='14'%20rx='3'%20fill='%23233A5C'/%3E%3Crect%20x='42'%20y='13'%20width='9'%20height='7'%20rx='1'%20fill='%23BFD9FF'/%3E%3Ccircle%20cx='13'%20cy='28'%20r='5'%20fill='%2316130F'/%3E%3Ccircle%20cx='13'%20cy='28'%20r='2'%20fill='%23888888'/%3E%3Ccircle%20cx='47'%20cy='28'%20r='5'%20fill='%2316130F'/%3E%3Ccircle%20cx='47'%20cy='28'%20r='2'%20fill='%23888888'/%3E%3C/svg%3E");
-  offset-path: path('M -60,170 C 200,60 420,230 700,110 S 1180,20 1460,120');
+  offset-path: path('M -80,210 C 260,220 380,120 620,130 S 1000,10 1480,-10');
   offset-rotate: auto;
   offset-distance: 0%;
-  animation: eco-truck-drive 17s linear infinite;
+  filter: drop-shadow(0 3px 3px rgba(0,0,0,0.25));
+  animation: eco-truck-drive 15s linear infinite;
 }
 
 @keyframes eco-glow-drift {
