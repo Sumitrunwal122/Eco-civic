@@ -49,23 +49,53 @@ h1, h2, h3 {
   border: none;
 }
 
-/* Jali lattice pattern — echoes the carved stone jharokha screens of
-   Jodhpur's blue-washed havelis. Layer onto dark hero banners with
-   className="jali-pattern" alongside their existing background gradient. */
+/* Ambient glow — soft, slowly-drifting color blooms behind the dark hero
+   banners, in the citizen-green and admin-aubergine brand tones. Replaces
+   a flatter lattice texture with something with more depth and life. */
 .jali-pattern {
   position: relative;
   overflow: hidden;
 }
 
-.jali-pattern::before {
+.jali-pattern::before,
+.jali-pattern::after {
   content: '';
   position: absolute;
-  inset: 0;
+  border-radius: 9999px;
+  filter: blur(70px);
   pointer-events: none;
-  opacity: 0.10;
-  background-image:
-    repeating-linear-gradient(45deg, rgba(255,255,255,0.9) 0, rgba(255,255,255,0.9) 1.5px, transparent 1.5px, transparent 26px),
-    repeating-linear-gradient(-45deg, rgba(255,255,255,0.9) 0, rgba(255,255,255,0.9) 1.5px, transparent 1.5px, transparent 26px);
+  z-index: 0;
+}
+
+.jali-pattern::before {
+  width: 360px;
+  height: 360px;
+  background: #1E7A5C;
+  opacity: 0.32;
+  top: -120px;
+  left: -80px;
+  animation: eco-glow-drift 14s ease-in-out infinite alternate;
+}
+
+.jali-pattern::after {
+  width: 320px;
+  height: 320px;
+  background: #9E549E;
+  opacity: 0.22;
+  bottom: -130px;
+  right: -70px;
+  animation: eco-glow-drift 14s ease-in-out infinite alternate;
+  animation-delay: -7s;
+}
+
+.jali-pattern > * {
+  position: relative;
+  z-index: 1;
+}
+
+@keyframes eco-glow-drift {
+  0%   { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(28px, 20px) scale(1.12); }
 }
 
 /* One deliberate press interaction for primary buttons, applied via the
