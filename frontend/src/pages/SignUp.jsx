@@ -66,10 +66,10 @@ const SignUp = ({ onLoginSuccess }) => {
 
       const res = await api.post('/api/auth/signup', payload);
       const { access_token, user } = res.data;
-      
+
       localStorage.setItem('civic_token', access_token);
       localStorage.setItem('civic_user', JSON.stringify(user));
-      
+
       if (onLoginSuccess) onLoginSuccess(user);
 
       // Redirect based on role
@@ -79,7 +79,17 @@ const SignUp = ({ onLoginSuccess }) => {
 
     } catch (err) {
       console.error(err);
-      setError(err.response?.data?.detail || 'Registration failed. Please check inputs and phone format (+91).');
+      const detail = err.response?.data?.detail;
+      let message = 'Registration failed. Please check inputs and phone format (+91).';
+      if (typeof detail === 'string') {
+        message = detail;
+      } else if (Array.isArray(detail)) {
+        // FastAPI validation errors: array of {loc, msg, type}
+        message = detail.map((d) => d.msg || JSON.stringify(d)).join('; ');
+      } else if (detail && typeof detail === 'object') {
+        message = detail.msg || JSON.stringify(detail);
+      }
+      setError(message);
     } finally {
       setLoading(false);
     }
@@ -87,6 +97,11 @@ const SignUp = ({ onLoginSuccess }) => {
 
   return (
     <div className="jali-pattern min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-emerald-950 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+      <svg className="jali-road" viewBox="0 0 1400 220" preserveAspectRatio="none">
+        <path className="jali-road-path" d="M -80,210 C 260,220 380,120 620,130 S 1000,10 1480,-10" />
+      </svg>
+      <div className="jali-truck" />
+
       <div className="sm:mx-auto sm:w-full sm:max-w-md text-center">
         <div className="inline-flex mb-4">
           <img src={logo} alt="ECO-civic logo" className="w-16 h-16 object-contain" />
@@ -99,7 +114,7 @@ const SignUp = ({ onLoginSuccess }) => {
 
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-lg">
         <div className="bg-white/95 backdrop-blur-md py-8 px-6 shadow-2xl rounded-3xl sm:px-10 border border-slate-100">
-          
+
           {error && (
             <div className="mb-6 bg-rose-50 border border-rose-200 text-rose-700 px-4 py-3 rounded-2xl text-sm flex items-start space-x-2">
               <AlertCircle className="w-5 h-5 shrink-0 mt-0.5" />

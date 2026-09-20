@@ -40,6 +40,11 @@ const SignIn = ({ onLoginSuccess }) => {
 
   return (
     <div className="jali-pattern min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-emerald-950 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+      <svg className="jali-road" viewBox="0 0 1400 220" preserveAspectRatio="none">
+        <path className="jali-road-path" d="M -80,210 C 260,220 380,120 620,130 S 1000,10 1480,-10" />
+      </svg>
+      <div className="jali-truck" />
+
       <div className="sm:mx-auto sm:w-full sm:max-w-md text-center">
         <div className="inline-flex mb-4">
           <img src={logo} alt="ECO-civic logo" className="w-16 h-16 object-contain" />
