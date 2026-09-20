@@ -11,7 +11,7 @@ const StaffDashboard = ({ user }) => {
   const [loading, setLoading] = useState(true);
   const [actionLoading, setActionLoading] = useState(false);
   const [msg, setMsg] = useState('');
-  const [coords, setCoords] = useState({ lat: 26.2389, lng:  73.0243 });
+  const [coords, setCoords] = useState({ lat: 26.2389, lng: 73.0243 });
 
   // Status update modal
   const [selectedTask, setSelectedTask] = useState(null);
@@ -106,7 +106,7 @@ const StaffDashboard = ({ user }) => {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
       {/* Header Banner */}
-      <div className="bg-gradient-to-r from-amber-700 via-slate-900 to-amber-950 text-white p-6 sm:p-8 rounded-3xl shadow-xl flex flex-col md:flex-row justify-between items-start md:items-center space-y-4 md:space-y-0">
+      <div className="jali-pattern bg-gradient-to-r from-amber-700 via-slate-900 to-amber-950 text-white p-6 sm:p-8 rounded-3xl shadow-xl flex flex-col md:flex-row justify-between items-start md:items-center space-y-4 md:space-y-0">
         <div>
           <div className="inline-flex items-center space-x-2 bg-amber-500/20 text-amber-300 px-3 py-1 rounded-full text-xs font-bold border border-amber-500/30 mb-2">
             <UserCheck className="w-3.5 h-3.5" />

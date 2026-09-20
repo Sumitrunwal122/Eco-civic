@@ -4,7 +4,7 @@ import { fleetWS } from '../services/websocket';
 import OpenStreetMap from '../components/OpenStreetMap';
 import CameraCaptureModal from '../components/CameraCaptureModal';
 import {
-   Camera, MapPin, Upload, AlertCircle, CheckCircle2,
+  Sparkles, Camera, MapPin, Upload, AlertCircle, CheckCircle2,
   Trash2, Layers, RefreshCw, Send, ShieldAlert, Info
 } from 'lucide-react';
 
@@ -168,9 +168,10 @@ const CitizenDashboard = ({ user }) => {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
       {/* Header Banner */}
-      <div className="bg-gradient-to-r from-emerald-800 via-teal-900 to-slate-900 text-white p-6 sm:p-8 rounded-3xl shadow-xl flex flex-col md:flex-row justify-between items-start md:items-center space-y-4 md:space-y-0">
+      <div className="jali-pattern bg-gradient-to-r from-emerald-800 via-teal-900 to-slate-900 text-white p-6 sm:p-8 rounded-3xl shadow-xl flex flex-col md:flex-row justify-between items-start md:items-center space-y-4 md:space-y-0">
         <div>
           <div className="inline-flex items-center space-x-2 bg-emerald-500/20 text-emerald-300 px-3 py-1 rounded-full text-xs font-bold border border-emerald-500/30 mb-2">
+            <Sparkles className="w-3.5 h-3.5" />
             <span>Swachh Bharat Citizen Portal</span>
           </div>
           <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight">
@@ -245,7 +246,8 @@ const CitizenDashboard = ({ user }) => {
         <div className="bg-gradient-to-b from-slate-900 to-slate-950 text-white p-6 rounded-3xl shadow-xl border border-slate-800 flex flex-col justify-between">
           <div>
             <div className="flex items-center space-x-2 text-emerald-400 font-bold text-sm mb-2">
-              <span>Vision-AI</span>
+              <Sparkles className="w-5 h-5" />
+              <span>Gemini Vision AI Engine</span>
             </div>
             <h3 className="text-xl font-bold text-white mb-2">Instant Swachh Waste Segregator</h3>
             <p className="text-xs text-slate-400 mb-6">
@@ -338,7 +340,11 @@ const CitizenDashboard = ({ user }) => {
                   onChange={(e) => setWardNo(e.target.value)}
                   className="w-full rounded-xl border border-slate-300 py-2.5 text-xs font-medium focus:ring-2 focus:ring-emerald-500 bg-white"
                 >
-                  {availableWards.map((w) => ( <option key={w} value={w}> {w}{WARD_LOCALITY_NAMES[w] ? ` (${WARD_LOCALITY_NAMES[w]})` : ''} </option> ))}
+                  {availableWards.map((w) => (
+                    <option key={w} value={w}>
+                      {w}{WARD_LOCALITY_NAMES[w] ? ` (${WARD_LOCALITY_NAMES[w]})` : ''}
+                    </option>
+                  ))}
                 </select>
               </div>
 

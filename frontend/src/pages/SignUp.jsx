@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import api from '../services/api';
-import { UserCheck, ShieldCheck, AlertCircle, Phone, Lock, User, Building } from 'lucide-react';
+import { UserCheck, ShieldCheck, Sparkles, AlertCircle, Phone, Lock, User, Building } from 'lucide-react';
 import logo from '../components/logo.png';
 
 // Friendly locality names for the original seeded wards; any ward beyond
@@ -86,7 +86,7 @@ const SignUp = ({ onLoginSuccess }) => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-emerald-950 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+    <div className="jali-pattern min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-emerald-950 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md text-center">
         <div className="inline-flex mb-4">
           <img src={logo} alt="ECO-civic logo" className="w-16 h-16 object-contain" />
@@ -259,6 +259,7 @@ const SignUp = ({ onLoginSuccess }) => {
                 <span>Registering Account...</span>
               ) : (
                 <>
+                  <Sparkles className="w-4 h-4" />
                   <span>Create Account</span>
                 </>
               )}

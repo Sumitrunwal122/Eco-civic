@@ -13,16 +13,20 @@ body {
   background-color: var(--paper);
 }
 
+/* Headings carry the civic/gazette identity: a serif display face,
+   distinct from the Mukta body text used everywhere else. */
 h1, h2, h3 {
   font-family: 'Spectral', Georgia, serif;
   letter-spacing: -0.01em;
 }
 
+/* Visible keyboard focus, in the brand indigo rather than a generic blue ring */
 :focus-visible {
   outline: 2px solid #233A5C;
   outline-offset: 2px;
 }
 
+/* Respect reduced-motion preferences */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
@@ -32,6 +36,7 @@ h1, h2, h3 {
   }
 }
 
+/* Custom Leaflet Map Container fixes */
 .leaflet-container {
   width: 100%;
   height: 100%;
@@ -42,4 +47,32 @@ h1, h2, h3 {
 .custom-div-icon {
   background: transparent;
   border: none;
+}
+
+/* Jali lattice pattern — echoes the carved stone jharokha screens of
+   Jodhpur's blue-washed havelis. Layer onto dark hero banners with
+   className="jali-pattern" alongside their existing background gradient. */
+.jali-pattern {
+  position: relative;
+  overflow: hidden;
+}
+
+.jali-pattern::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.10;
+  background-image:
+    repeating-linear-gradient(45deg, rgba(255,255,255,0.9) 0, rgba(255,255,255,0.9) 1.5px, transparent 1.5px, transparent 26px),
+    repeating-linear-gradient(-45deg, rgba(255,255,255,0.9) 0, rgba(255,255,255,0.9) 1.5px, transparent 1.5px, transparent 26px);
+}
+
+/* One deliberate press interaction for primary buttons, applied via the
+   .btn-press utility rather than scattered per-component hover rules. */
+.btn-press {
+  transition: transform 150ms ease, box-shadow 150ms ease;
+}
+.btn-press:active {
+  transform: scale(0.97);
 }
