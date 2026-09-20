@@ -49,53 +49,60 @@ h1, h2, h3 {
   border: none;
 }
 
-/* Ambient glow — soft, slowly-drifting color blooms behind the dark hero
-   banners, in the citizen-green and admin-aubergine brand tones. Replaces
-   a flatter lattice texture with something with more depth and life. */
+/* Ambient glow — soft color blooms behind the dark hero banners, in the
+   citizen-green and admin-aubergine brand tones. */
 .jali-pattern {
   position: relative;
   overflow: hidden;
 }
 
-.jali-pattern::before,
+.jali-pattern::before {
+  content: '';
+  position: absolute;
+  inset: -40px;
+  pointer-events: none;
+  z-index: 0;
+  background-image:
+    radial-gradient(240px 240px at 8% 0%, rgba(30,122,92,0.38), transparent 70%),
+    radial-gradient(220px 220px at 96% 100%, rgba(158,84,158,0.30), transparent 70%);
+  animation: eco-glow-drift 14s ease-in-out infinite alternate;
+}
+
+@keyframes eco-glow-drift {
+  0%   { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(18px, 12px) scale(1.06); }
+}
+
+/* A garbage truck driving along a dashed route line at the base of the
+   banner — the same road motif carried through from the logo, and a nod
+   to the app's live fleet-tracking feature. */
 .jali-pattern::after {
   content: '';
   position: absolute;
-  border-radius: 9999px;
-  filter: blur(70px);
+  left: 0;
+  right: 0;
+  bottom: 14px;
+  height: 30px;
   pointer-events: none;
   z-index: 0;
+  opacity: 0.5;
+  background-repeat: repeat-x, no-repeat;
+  background-image:
+    repeating-linear-gradient(90deg, rgba(255,255,255,0.35) 0 10px, transparent 10px 22px),
+    url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%2064%2034%27%3E%3Crect%20x%3D%272%27%20y%3D%276%27%20width%3D%2738%27%20height%3D%2718%27%20rx%3D%272%27%20fill%3D%27white%27/%3E%3Crect%20x%3D%2740%27%20y%3D%2712%27%20width%3D%2716%27%20height%3D%2712%27%20rx%3D%272%27%20fill%3D%27white%27/%3E%3Crect%20x%3D%2744%27%20y%3D%2715%27%20width%3D%278%27%20height%3D%276%27%20rx%3D%271%27%20fill%3D%27%2316130F%27/%3E%3Ccircle%20cx%3D%2713%27%20cy%3D%2728%27%20r%3D%275%27%20fill%3D%27white%27/%3E%3Ccircle%20cx%3D%2713%27%20cy%3D%2728%27%20r%3D%272%27%20fill%3D%27%2316130F%27/%3E%3Ccircle%20cx%3D%2747%27%20cy%3D%2728%27%20r%3D%275%27%20fill%3D%27white%27/%3E%3Ccircle%20cx%3D%2747%27%20cy%3D%2728%27%20r%3D%272%27%20fill%3D%27%2316130F%27/%3E%3C/svg%3E");
+  background-position: left bottom, -70px bottom;
+  background-size: 100% 2px, 58px 30px;
+  animation: eco-truck-drive 17s linear infinite;
 }
 
-.jali-pattern::before {
-  width: 360px;
-  height: 360px;
-  background: #1E7A5C;
-  opacity: 0.32;
-  top: -120px;
-  left: -80px;
-  animation: eco-glow-drift 14s ease-in-out infinite alternate;
-}
-
-.jali-pattern::after {
-  width: 320px;
-  height: 320px;
-  background: #9E549E;
-  opacity: 0.22;
-  bottom: -130px;
-  right: -70px;
-  animation: eco-glow-drift 14s ease-in-out infinite alternate;
-  animation-delay: -7s;
+@keyframes eco-truck-drive {
+  0%   { background-position: left bottom, -70px bottom; }
+  100% { background-position: left bottom, 112% bottom; }
 }
 
 .jali-pattern > * {
   position: relative;
   z-index: 1;
-}
-
-@keyframes eco-glow-drift {
-  0%   { transform: translate(0, 0) scale(1); }
-  100% { transform: translate(28px, 20px) scale(1.12); }
 }
 
 /* One deliberate press interaction for primary buttons, applied via the
