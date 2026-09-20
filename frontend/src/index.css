@@ -1,13 +1,37 @@
 @import 'leaflet/dist/leaflet.css';
+@import url('https://fonts.googleapis.com/css2?family=Mukta:wght@400;500;600;700;800&family=Spectral:wght@500;600;700;800&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-body {
-  font-family: 'Inter', sans-serif;
+:root {
+  --paper: #FAF8F5;
 }
 
-/* Custom Leaflet Map Container fixes */
+body {
+  font-family: 'Mukta', system-ui, sans-serif;
+  background-color: var(--paper);
+}
+
+h1, h2, h3 {
+  font-family: 'Spectral', Georgia, serif;
+  letter-spacing: -0.01em;
+}
+
+:focus-visible {
+  outline: 2px solid #233A5C;
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
 .leaflet-container {
   width: 100%;
   height: 100%;
