@@ -42,26 +42,11 @@ const SignIn = ({ onLoginSuccess }) => {
     <div className="jali-pattern min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-emerald-950 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
       <svg className="jali-road" viewBox="0 0 1600 1000" preserveAspectRatio="xMidYMid slice">
         <path
-          id="jaliRoadPath"
           className="jali-road-path"
           d="M -100,120 C 250,60 480,430 800,500 S 1350,900 1700,860"
         />
-        <g className="jali-truck-group">
-          <g transform="translate(-46,-24)">
-            <rect x="2" y="6" width="36" height="18" rx="3" fill="#1E7A5C" />
-            <rect x="4" y="9" width="30" height="4" fill="#ffffff" opacity="0.45" />
-            <rect x="38" y="10" width="18" height="14" rx="3" fill="#233A5C" />
-            <rect x="42" y="13" width="9" height="7" rx="1" fill="#BFD9FF" />
-            <circle cx="13" cy="28" r="5" fill="#16130F" />
-            <circle cx="13" cy="28" r="2" fill="#888888" />
-            <circle cx="47" cy="28" r="5" fill="#16130F" />
-            <circle cx="47" cy="28" r="2" fill="#888888" />
-          </g>
-          <animateMotion dur="16s" repeatCount="indefinite" rotate="auto">
-            <mpath href="#jaliRoadPath" />
-          </animateMotion>
-        </g>
       </svg>
+      <div className="jali-truck" />
 
       <div className="sm:mx-auto sm:w-full sm:max-w-md text-center">
         <div className="inline-flex mb-4">

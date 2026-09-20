@@ -101,8 +101,28 @@ h1, h2, h3 {
   animation: eco-dash-march 1.6s linear infinite;
 }
 
-.jali-truck-group {
+/* The truck: positioned with plain top/left percentages so it always
+   scales with the banner's actual size, instead of relying on SVG
+   path-following (which is inconsistent across browsers). Each keyframe
+   is one point sampled along the same curve the dashed road line draws,
+   so the truck visibly rides the line — descending from the top-left,
+   sweeping behind the card in the middle of the page, and continuing
+   toward the bottom-right. */
+.jali-truck {
+  position: absolute;
+  top: 8%;
+  left: -6%;
+  width: 64px;
+  height: 34px;
+  margin-top: -17px;
+  margin-left: -32px;
+  pointer-events: none;
+  z-index: 0;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-image: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2064%2034'%3E%3Crect%20x='2'%20y='6'%20width='36'%20height='18'%20rx='3'%20fill='%231E7A5C'/%3E%3Crect%20x='4'%20y='9'%20width='30'%20height='4'%20fill='%23ffffff'%20opacity='0.45'/%3E%3Crect%20x='38'%20y='10'%20width='18'%20height='14'%20rx='3'%20fill='%23233A5C'/%3E%3Crect%20x='42'%20y='13'%20width='9'%20height='7'%20rx='1'%20fill='%23BFD9FF'/%3E%3Ccircle%20cx='13'%20cy='28'%20r='5'%20fill='%2316130F'/%3E%3Ccircle%20cx='13'%20cy='28'%20r='2'%20fill='%23888888'/%3E%3Ccircle%20cx='47'%20cy='28'%20r='5'%20fill='%2316130F'/%3E%3Ccircle%20cx='47'%20cy='28'%20r='2'%20fill='%23888888'/%3E%3C/svg%3E");
   filter: drop-shadow(0 4px 4px rgba(0,0,0,0.3));
+  animation: eco-truck-drive 16s linear infinite;
 }
 
 @keyframes eco-glow-drift {
@@ -115,6 +135,15 @@ h1, h2, h3 {
   to   { stroke-dashoffset: -60; }
 }
 
+@keyframes eco-truck-drive {
+  0%   { top: 8%;  left: -6%;  transform: rotate(22deg); }
+  20%  { top: 22%; left: 22%;  transform: rotate(30deg); }
+  40%  { top: 46%; left: 46%;  transform: rotate(34deg); }
+  60%  { top: 68%; left: 66%;  transform: rotate(28deg); }
+  80%  { top: 86%; left: 84%;  transform: rotate(18deg); }
+  100% { top: 96%; left: 106%; transform: rotate(12deg); }
+}
+
 .jali-pattern > * {
   position: relative;
   z-index: 1;
@@ -124,8 +153,10 @@ h1, h2, h3 {
   .jali-road-path {
     animation: none;
   }
-  .jali-truck-group animateMotion {
-    display: none;
+  .jali-truck {
+    animation: none;
+    top: 46%;
+    left: 46%;
   }
 }
 
