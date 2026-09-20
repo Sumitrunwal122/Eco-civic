@@ -247,7 +247,7 @@ const CitizenDashboard = ({ user }) => {
           <div>
             <div className="flex items-center space-x-2 text-emerald-400 font-bold text-sm mb-2">
               <Sparkles className="w-5 h-5" />
-              <span>Gemini Vision AI Engine</span>
+              <span> Vision AI </span>
             </div>
             <h3 className="text-xl font-bold text-white mb-2">Instant Swachh Waste Segregator</h3>
             <p className="text-xs text-slate-400 mb-6">
