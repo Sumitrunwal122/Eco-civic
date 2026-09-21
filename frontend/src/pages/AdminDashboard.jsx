@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import api from '../services/api';
 import OpenStreetMap from '../components/OpenStreetMap';
-import AnimatedCounter from '../components/animatedcounter';
+import AnimatedCounter from '../components/AnimatedCounter.jsx';
 import {
   ShieldCheck, Users, Truck, CheckCircle2, Clock, AlertTriangle,
   FileSpreadsheet, UserPlus, RefreshCw, Filter, Layers, ChevronRight,
