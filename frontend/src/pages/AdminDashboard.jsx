@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import api from '../services/api';
 import OpenStreetMap from '../components/OpenStreetMap';
-import AnimatedCounter from '../components/AnimatedCounter';
+import AnimatedCounter from '../components/animatedcounter';
 import {
   ShieldCheck, Users, Truck, CheckCircle2, Clock, AlertTriangle,
   FileSpreadsheet, UserPlus, RefreshCw, Filter, Layers, ChevronRight,
@@ -173,7 +173,7 @@ const AdminDashboard = ({ user }) => {
           </div>
           <div>
             <p className="text-xs text-slate-500 font-semibold uppercase tracking-wider">Pending Tasks</p>
-            <h3 className="text-2xl font-black text-slate-900"><AnimatedCounter value={stats?.complaints?.pending ?? 0} /></h3>
+            <h3 className="text-2xl font-black text-slate-900"><animatedcounter value={stats?.complaints?.pending ?? 0} /></h3>
           </div>
         </div>
 
@@ -183,7 +183,7 @@ const AdminDashboard = ({ user }) => {
           </div>
           <div>
             <p className="text-xs text-slate-500 font-semibold uppercase tracking-wider">Assigned Duties</p>
-            <h3 className="text-2xl font-black text-slate-900"><AnimatedCounter value={stats?.complaints?.assigned ?? 0} /></h3>
+            <h3 className="text-2xl font-black text-slate-900"><animatedcounter value={stats?.complaints?.assigned ?? 0} /></h3>
           </div>
         </div>
 
@@ -193,7 +193,7 @@ const AdminDashboard = ({ user }) => {
           </div>
           <div>
             <p className="text-xs text-slate-500 font-semibold uppercase tracking-wider">Resolved Rate</p>
-            <h3 className="text-2xl font-black text-slate-900"><AnimatedCounter value={stats?.complaints?.clearance_rate_percent ?? 100} decimals={1} suffix="%" /></h3>
+            <h3 className="text-2xl font-black text-slate-900"><animatedcounter value={stats?.complaints?.clearance_rate_percent ?? 100} decimals={1} suffix="%" /></h3>
           </div>
         </div>
 
@@ -203,7 +203,7 @@ const AdminDashboard = ({ user }) => {
           </div>
           <div>
             <p className="text-xs text-slate-500 font-semibold uppercase tracking-wider">Staff On Duty</p>
-            <h3 className="text-2xl font-black text-slate-900"><AnimatedCounter value={stats?.workforce?.active_on_duty_today ?? 0} /></h3>
+            <h3 className="text-2xl font-black text-slate-900"><animatedcounter value={stats?.workforce?.active_on_duty_today ?? 0} /></h3>
           </div>
         </div>
       </div>
