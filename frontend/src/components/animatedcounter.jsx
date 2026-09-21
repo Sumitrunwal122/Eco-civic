@@ -5,9 +5,9 @@ import React, { useEffect, useRef, useState } from 'react';
  * changes, using requestAnimationFrame with an ease-out curve — no external
  * animation library required.
  *
- * Usage: <AnimatedCounter value={stats.pending} suffix="%" />
+ * Usage: <animatedcounter value={stats.pending} suffix="%" />
  */
-const AnimatedCounter = ({ value = 0, duration = 800, suffix = '', decimals = 0 }) => {
+const animatedcounter = ({ value = 0, duration = 800, suffix = '', decimals = 0 }) => {
   const [display, setDisplay] = useState(0);
   const fromRef = useRef(0);
   const rafRef = useRef(null);
@@ -57,4 +57,4 @@ const AnimatedCounter = ({ value = 0, duration = 800, suffix = '', decimals = 0 
   );
 };
 
-export default AnimatedCounter;
+export default animatedcounter;
