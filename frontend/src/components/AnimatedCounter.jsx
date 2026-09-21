@@ -17,7 +17,6 @@ const AnimatedCounter = ({ value = 0, duration = 800, suffix = '', decimals = 0 
     const to = Number(value) || 0;
     const start = performance.now();
 
-    // Respect reduced-motion preference: jump straight to the value.
     const prefersReducedMotion = window.matchMedia
       ? window.matchMedia('(prefers-reduced-motion: reduce)').matches
       : false;
@@ -50,10 +49,51 @@ const AnimatedCounter = ({ value = 0, duration = 800, suffix = '', decimals = 0 
   }, [value]);
 
   return (
-    <span>
-      {display.toFixed(decimals)}
-      {suffix}
-    </span>
+    // --- Wrapper that produces the blurry dark-teal gradient background ---
+    <div
+      style={{
+        position: 'relative',
+        width: '100%',
+        height: '100%',
+        minHeight: 300,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        overflow: 'hidden',
+        borderRadius: 12,
+        background: `
+          radial-gradient(120% 90% at 30% 85%, #2e5d54 0%, #1b3b36 35%, #0a1a17 70%, #000000 100%)
+        `,
+      }}
+    >
+      {/* Soft blur layer to get the hazy, out-of-focus feel */}
+      <div
+        style={{
+          position: 'absolute',
+          inset: -40,
+          background: `
+            radial-gradient(60% 50% at 25% 90%, rgba(72,140,120,0.55), transparent 70%),
+            radial-gradient(50% 40% at 80% 20%, rgba(0,0,0,0.6), transparent 70%)
+          `,
+          filter: 'blur(60px)',
+          pointerEvents: 'none',
+        }}
+      />
+
+      <span
+        style={{
+          position: 'relative',
+          zIndex: 1,
+          fontSize: '3rem',
+          fontWeight: 600,
+          color: '#e8f2ef',
+          letterSpacing: '-0.02em',
+        }}
+      >
+        {display.toFixed(decimals)}
+        {suffix}
+      </span>
+    </div>
   );
 };
 
